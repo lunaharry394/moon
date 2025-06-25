@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Night Sky</title>
+  <style>
+    html, body {
+      background: #140e35;
+      height: 100%;
+      overflow: hidden;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .centered {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    .night-sky {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      width: 80%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(253, 157, 238, 0.5), transparent 40%);
+    }
+
+    .night-sky ul li {
+      position: absolute;
+      list-style: none;
+      border-radius: 100px;
+      background: linear-gradient(to right, rgba(157, 229, 253, 0.59), transparent);
+      opacity: 0;
+      animation: twinkle 1.5s ease infinite;
+    }
+
+    /* Generate 15 stars with JavaScript logic for variability */
+    /* Or you can hard-code styles manually for each if needed */
+
+    .stars {
+      width: 170px;
+      top: 20%;
+      position: absolute;
+      z-index: 999;
+      left: 30%;
+      transform: scale(0.8);
+    }
+
+    .stars div:nth-child(1) {
+      width: 20px;
+      height: 6px;
+      border-radius: 100%;
+      background: #fff;
+      animation: twinkle-width 1s ease infinite;
+    }
+
+    .stars div:nth-child(2) {
+      width: 6px;
+      height: 20px;
+      background: #fff;
+      border-radius: 100%;
+      position: absolute;
+      left: 7px;
+      top: -7px;
+      transform-origin: middle;
+      animation: twinkle-height 1s ease infinite;
+    }
+
+    .stars div:nth-child(3) {
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 100px;
+      position: absolute;
+      left: 5px;
+      top: -2px;
+    }
+
+    .clouds {
+      position: absolute;
+      display: block;
+      left: 30%;
+      top: 40%;
+      opacity: 0.4;
+    }
+
+    .clouds div {
+      position: absolute;
+      background: #fff;
+      border-radius: 100px;
+    }
+
+    .clouds div:nth-child(1) {
+      width: 80px;
+      height: 80px;
+    }
+
+    .clouds div:nth-child(2) {
+      width: 90px;
+      height: 90px;
+      left: -40px;
+      top: 30px;
+    }
+
+    .clouds div:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      left: 60px;
+      top: 40px;
+    }
+
+    .clouds div:nth-child(4) {
+      width: 60px;
+      height: 60px;
+      left: 20px;
+      top: 40px;
+    }
+
+    .moon {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 100%;
+      background: #fff;
+      top: -35%;
+      box-shadow: 0px 20px 50px rgba(157, 229, 253, 0.59);
+    }
+
+    .moon::before,
+    .moon::after {
+      content: '';
+      position: absolute;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent 40%);
+      border-radius: 100px;
+    }
+
+    .moon::before {
+      width: 30px;
+      height: 30px;
+      top: 40px;
+      left: 82px;
+      transform: rotate(-60deg);
+    }
+
+    .moon::after {
+      width: 50px;
+      height: 50px;
+      top: 80px;
+      left: 25px;
+      transform: rotate(-20deg);
+    }
+
+    .moon ul li {
+      list-style: none;
+      background: radial-gradient(circle, #fff 0%, transparent 90%);
+      position: absolute;
+      border-radius: 100%;
+      opacity: 0.2;
+      transform: scale(1);
+      animation: moon-glow 6s ease infinite;
+    }
+
+    .moon ul li:nth-child(1) {
+      width: 120%;
+      height: 120%;
+      left: -10px;
+      top: -10px;
+    }
+
+    .moon ul li:nth-child(2) {
+      width: 140%;
+      height: 140%;
+      left: -22.5px;
+      top: -22.5px;
+      animation-delay: 1s;
+    }
+
+    .moon ul li:nth-child(3) {
+      width: 160%;
+      height: 160%;
+      left: -35px;
+      top: -35px;
+      animation-delay: 2s;
+    }
+
+    .sea-horizon {
+      width: 80%;
+      background: linear-gradient(to right, #140e35 27%, rgba(253, 157, 238, 0.5) 48%, #140e35 73%);
+      height: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+
+    .sea-horizon::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 3px;
+      background: #140e35;
+    }
+
+    .sea-shine {
+      width: 40%;
+      position: absolute;
+      left: -5%;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+    }
+
+    .sea-shine ul li {
+      list-style: none;
+      position: absolute;
+      display: block;
+      border-radius: 100px;
+      transition: all 0.2s ease;
+      animation: sea-glow 4s ease infinite;
+    }
+
+    .sea-shine ul li:nth-child(1) {
+      width: 60px;
+      height: 6px;
+      top: 3px;
+      background: radial-gradient(circle at 0% 50%, rgba(204, 0, 0, 0) 4px, rgba(253, 157, 238, 0.5) 5px);
+      left: 50%;
+    }
+
+    /* Add additional <li> styling similar to above if you want full glow layers */
+
+    @keyframes twinkle {
+      0% {opacity: 0;}
+      50% {opacity: 1;}
+      100% {opacity: 0;}
+    }
+
+    @keyframes moon-glow {
+      0% {transform: scale(1);}
+      50% {transform: scale(1.1);}
+      100% {transform: scale(1);}
+    }
+
+    @keyframes twinkle-height {
+      0% {height: 20px; top: -7px;}
+      50% {height: 10px; top: -3px;}
+      100% {height: 20px; top: -7px;}
+    }
+
+    @keyframes twinkle-width {
+      0% {width: 20px; left: 0px;}
+      50% {width: 10px; left: 5px;}
+      100% {width: 20px; left: 0px;}
+    }
+
+    @keyframes sea-glow {
+      0% {left: 50%;}
+      50% {left: 52%;}
+      100% {left: 50%;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="night-sky">
+  <ul>
+    <li></li><li></li><li></li><li></li><li></li>
+    <li></li><li></li><li></li><li></li><li></li>
+    <li></li><li></li><li></li><li></li><li></li>
+  </ul>
+  <div class="stars"><div></div><div></div><div></div></div>
+  <div class="stars"><div></div><div></div><div></div></div>
+  <div class="stars"><div></div><div></div><div></div></div>
+  <div class="stars"><div></div><div></div><div></div></div>
+
+  <div class="clouds">
+    <div></div><div></div><div></div><div></div>
+  </div>
+  <div class="clouds">
+    <div></div><div></div><div></div><div></div>
+  </div>
+</div>
+
+<div class="moon">
+  <ul>
+    <li></li><li></li><li></li>
+  </ul>
+</div>
+
+<div class="sea-horizon">
+  <div class="sea-shine">
+    <ul>
+      <li></li><li></li><li></li><li></li>
+      <li></li><li></li><li></li><li></li>
+      <li></li><li></li><li></li><li></li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
